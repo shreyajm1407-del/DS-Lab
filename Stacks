@@ -1,0 +1,76 @@
+#include <stdio.h>
+#define max 200
+
+int top = -1;
+int a[max];
+
+void push(int item)
+{
+    if (top == max - 1)
+        printf("Stack is full\n");
+    else {
+        top++;
+        a[top] = item;
+    }
+}
+
+int pop()
+{
+    if (top == -1) {
+        printf("Stack is empty\n");
+        return -1;
+    } else {
+        int item = a[top];
+        top--;
+        return item;
+    }
+}
+
+void display()
+{
+    if (top == -1)
+        printf("Stack is empty\n");
+
+    else {
+        printf("Stack elements:\n");
+        for (int i = top; i >= 0; i--)
+            printf("%d ", a[i]);
+        printf("\n");
+    }
+}
+
+int main()
+{
+    int choice, item;
+
+    while (1) {
+        printf("\n1. Push\n2. Pop\n3. Display\n4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        switch (choice) {
+        case 1:
+            printf("Enter element to push: ");
+            scanf("%d", &item);
+            push(item);
+            break;
+
+        case 2:
+            item = pop();
+            if (item != -1)
+                printf("Popped element = %d\n", item);
+            break;
+
+        case 3:
+            display();
+            break;
+
+        case 4:
+            return 0;
+
+        default:
+            printf("Invalid choice\n");
+        }
+    }
+exit(0);
+}
