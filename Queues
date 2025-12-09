@@ -1,0 +1,88 @@
+#include<stdio.h>
+#define Maxsize 5
+int queue[Maxsize];                                                            
+int front=-1; int rear=-1;
+
+void insert(int item)
+{
+if(rear==Maxsize-1)
+{
+printf("Queue overflow");
+}
+else if(front==-1)
+{
+front=0; rear=0;
+queue[rear]=item;
+}
+else
+{
+rear=rear+1;
+queue[rear]=item;
+}
+}
+
+int delete()
+{
+int item;
+if(front==-1)
+{
+printf("Queue empty");
+return 0;
+}
+else if(front==rear)
+{
+item=queue[front];
+front=-1; rear=-1;
+return(item);
+}
+else
+{
+item=queue[front];
+front=front+1;
+return(item);
+}
+}
+
+void display()
+{
+if(front==-1)
+{
+printf("Queue empty");
+}
+else
+{
+int i;
+for(i=front;i<=rear;i++)
+{
+printf("\n%d\n",queue[i]);
+}
+}
+}
+
+void main()
+{
+int item;int n=0;
+while(n!=4){
+printf("\nEnter 1 for insertion\n2 for deletion\n3 for display\n4 for exit\n");
+scanf("%d",&n);
+if(n==1){
+printf("\nEnter item to be inserted:");
+   scanf("%d",&item);
+   insert(item);
+   printf("\nQueue after insertion:");
+   display();
+   
+}
+else if(n==2){
+delete();
+printf("\nQueue after deletion:");
+display();
+}
+else if(n==3){
+display();
+}
+else{
+printf("Exit");
+}
+}
+}
