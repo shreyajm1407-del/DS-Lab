@@ -1,0 +1,131 @@
+#include<stdio.h>
+#include<stdlib.h>
+struct node{
+struct node *prev;
+int info;
+struct node *next;
+};
+
+struct node *createdll()
+{
+    struct node *start=NULL,*last,*p;
+    int ele;
+    printf("Enter the elements[enter -99 to stop]\n");
+    scanf("%d",&ele);
+    while(ele!=-99)
+    {
+        p=(struct node *)malloc(sizeof(struct node));
+        p->info=ele;
+        if(start==NULL)
+        {
+            p->prev=NULL;
+            p->next=NULL;
+            start=p;
+            last=p;
+        }
+        else{
+               p->next=NULL;
+               p->prev=last;
+               last->next=p;
+               last=p;
+        }
+        scanf("%d",&ele);
+    }
+    return start;
+}
+
+struct node *insertdllbeg(struct node *start,int ele)
+{
+    struct node *p;
+    p=(struct node *)malloc(sizeof(struct node));
+    p->info=ele;
+    if(start==NULL)
+    {
+        p->prev=NULL;
+        p->next=NULL;
+        start=p;
+    }
+    else{
+        p->prev=NULL;
+        p->next=start;
+        start->prev=p;
+        start=p;
+    }
+    return start;
+}
+
+struct node *deletesllsp(struct node *start,int ele)
+{
+    struct node *temp,*follow;
+    if(start==NULL)
+        printf("Empty linked list");
+    else if(start->info==ele)
+    {
+        temp=start;
+        start=start->next;
+        free(temp);
+    }
+    else
+    {
+        temp=start;
+        while(temp!=NULL && temp->info!=ele)
+        {
+            follow=temp;
+            temp=temp->next;
+        }
+        follow->next=temp->next;
+        free(temp);
+
+    }
+    return start;
+}
+
+void display(struct node *start)
+{
+    struct node *temp=start;
+    if(start==NULL)
+        printf("Empty linked list");
+    else
+    {
+        while(temp!=NULL)
+        {
+            printf("%d ",temp->info);
+            temp=temp->next;
+        }
+    }
+}
+
+int main()
+{
+    int c,ele;
+    struct node *start=createdll();
+    while(1)
+    {
+        printf("Enter your choice\n1.insertion\n2.deletion\n3.display\n4.exit\n");
+        scanf("%d",&c);
+        switch (c)
+        {
+
+            case 1:printf("Enter the element to be inserted:");
+            scanf("%d",&ele);
+            start=insertdllbeg(start,ele);
+            break;
+
+            case 2:printf("Enter the element to be deleted:");
+            scanf("%d",&ele);
+            start=deletesllsp(start,ele);
+            break;
+
+            case 3:display(start);
+            break;
+
+            case 4:exit(0);
+            break;
+
+            default:printf("invalid input");
+
+        }
+
+    }
+return 0;
+}
