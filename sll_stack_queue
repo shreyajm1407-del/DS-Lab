@@ -1,0 +1,135 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+struct node {
+    int info;
+    struct node *next;
+};
+
+
+struct node* insertend(struct node *start, int item) {
+    struct node *p, *temp;
+    p = (struct node*)malloc(sizeof(struct node));
+    p->info = item;
+    p->next = NULL;
+
+    if (start == NULL) {
+        return p;
+    }
+
+    temp = start;
+    while (temp->next != NULL)
+        temp = temp->next;
+
+    temp->next = p;
+    return start;
+}
+
+struct node* deletefirst(struct node *start) {
+    if (start == NULL) {
+        printf("Queue is empty.\n");
+        return start;
+    }
+
+    struct node *temp = start;
+    start = start->next;
+    free(temp);
+
+    return start;
+}
+
+
+struct node* deletelast(struct node *start) {
+    struct node *temp, *follow;
+
+    if (start == NULL) {
+        printf("Stack is empty.\n");
+        return start;
+    }
+
+    if (start->next == NULL) {
+        free(start);
+        return NULL;
+    }
+
+    temp = start;
+    while (temp->next != NULL) {
+        follow = temp;
+        temp = temp->next;
+    }
+
+    follow->next = NULL;
+    free(temp);
+
+    return start;
+}
+
+
+void display(struct node *start) {
+    struct node *p = start;
+
+    if (p == NULL) {
+        printf("List is empty.\n");
+        return;
+    }
+
+    while (p != NULL) {
+        printf("%d ", p->info);
+        p = p->next;
+    }
+    printf("\n");
+}
+
+int main() {
+    struct node *start = NULL;
+    int n = 0, item;
+
+    printf("==== MERGED STACK + QUEUE USING LINKED LIST ====\n");
+    printf("1. Queue Enqueue\n");
+    printf("2. Queue Dequeue\n");
+    printf("3. Stack Push\n");
+    printf("4. Stack Pop\n");
+    printf("5. Display List\n");
+    printf("6. Exit\n");
+
+    while (n != 6) {
+        printf("\nEnter your choice: ");
+        scanf("%d", &n);
+
+        switch (n) {
+        case 1:
+            printf("Enter element to Enqueue: ");
+            scanf("%d", &item);
+            start = insertend(start, item);
+            break;
+
+        case 2:
+            start = deletefirst(start);
+            break;
+
+        case 3:
+            printf("Enter element to Push: ");
+            scanf("%d", &item);
+            start = insertend(start, item);
+            break;
+
+        case 4:
+            start = deletelast(start);
+            break;
+
+        case 5:
+            printf("List: ");
+            display(start);
+            break;
+
+        case 6:
+            printf("Exiting...\n");
+            break;
+
+        default:
+            printf("Invalid choice!\n");
+        }
+    }
+
+    return 0;
+}
