@@ -1,0 +1,130 @@
+#include <stdio.h>
+#include <stdlib.h>
+struct node{
+    int info;
+    struct node *next;
+};
+struct node* insertbeg(struct node * start,int item,struct node *p){
+    if(start==NULL){
+        start=p;
+        return start;
+    }
+    else{
+        p->next=start;
+        start=p;
+        return start;
+    }
+}
+struct node* insertend(struct node *start,int item,struct node *p){
+    struct node *temp=start;
+    if(start==NULL){
+        start=p;
+        return start;
+    }
+    else{
+        while(temp->next!=NULL)
+            temp=temp->next;
+        temp->next=p;
+        return start;
+    }
+}
+struct node* insertposbefore(struct node *start,int item,struct node *p,int ele){
+    struct node *temp=start,*follow=NULL;
+    if(start==NULL){
+        start=p;
+        return start;
+    }
+    else{
+        while(temp->info!=ele){
+                follow=temp;
+            temp=temp->next;
+            if(temp==NULL){
+                printf("Element not found\n");
+                return start;
+            }
+            }
+        if(temp==start){
+            p->next=start;
+            start=p;
+            return start;
+        }
+        follow->next=p;
+        p->next=temp;
+        return start;
+}
+}
+struct node* insertposafter(struct node *start,int item,struct node *p,int ele){
+    struct node *temp=start->next,*follow=start;
+    if(start==NULL){
+        start=p;
+        return start;
+    }
+    else{
+        while(follow->info!=ele){
+                follow=temp;
+            temp=temp->next;
+            if(temp==NULL){
+                printf("Element not found\n");
+                return start;
+            }
+
+            }
+
+        follow->next=p;
+        p->next=temp;
+        return start;
+    }
+    }
+void display(struct node *start){
+    if(start==NULL){
+        printf("Linked List is empty\n");
+    }
+    else{
+        struct node *p;
+        p=start;
+        while(p!=NULL){
+            printf("%d->",p->info);
+            p=p->next;
+        }
+        printf("NULL");
+    }
+}
+void main(){
+    struct node *start,*p;
+    start=NULL;
+    printf("Enter the elements:\nEnter -100 to exit\n");
+    int n=0,choice,ele=0;
+    while(1){
+    printf("Enter the element:\n");
+    scanf("%d",&n);
+    p=(struct node *)malloc(sizeof(struct node));
+    p->info=n;
+    p->next=NULL;
+    printf("Enter 1 for insertion at start\n2 for insertion at end\n3 for insertion at a position before element\n4 for insertion at a position after element");
+    scanf("%d",&choice);
+    if(n==-100)
+        break;
+    else{
+            switch(choice){
+                case 1:
+                start=insertbeg(start,n,p);
+                break;
+                case 2:
+                start=insertend(start,n,p);
+                break;
+                case 3:
+                    printf("Enter before which element\n");
+                    scanf("%d",&ele);
+                    start=insertposbefore(start,n,p,ele);
+                    break;
+                case 4:
+                    printf("Enter after which element\n");
+                    scanf("%d",&ele);
+                start=insertposafter(start,n,p,ele);
+                break;
+    }
+    }
+    }
+    printf("The Linked List is:");
+    display(start);
+}
